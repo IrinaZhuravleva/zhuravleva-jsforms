@@ -31,13 +31,13 @@
 				<div class="login-form__background--registration">
 					<div class="login-form p-10 pt-30 pb-30">
 						<h1 class="text-center login-heading mt-0 pt-0">Вход на сайт</h1>
-						<form id="login-form">
+						<form id="login-form" action="success.html">
 							<div class="notify notify--error mb-20 error-hide" id="no-email">Введите email</div>
 							<div class="notify notify--error mb-20 error-hide" id="incorrect-email">Неверный формат email</div>
 							<div class="notify notify--error mb-20 error-hide" id="no-password">Введите пароль</div>
 							<div class="notify no-paddings">
-								<div class="notify no-radius-bottom notify--error error-hide" id="incorrect-login">Неверный email или пароль</div>
-								<div class="notify no-radius-top error-hide">
+								<div class="notify no-radius-bottom notify--error error-hide" id="incorrect-password">Неверный email или пароль</div>
+								<div class="notify no-radius-top error-hide" id="incorrect-login">
 									<p>Введите верные данные для входа или воспользуйтесь
 										<a href="#!">восстановлением пароля</a>, чтобы войти на сайт.</p>
 								</div>
@@ -45,7 +45,7 @@
 							<input class="input-form-registration" name="email" type="email" placeholder="Email" />
 							<input class="input-form-registration" name="password" type="password" placeholder="Пароль" />
 							<div class="text-center pt-30">
-								<input type="submit" value="Войти" class="button button--enter pl-50 pr-50">
+								<input type="button" value="Войти" class="button button--enter pl-50 pr-50">
 							</div>
 						</form>
 					</div>
