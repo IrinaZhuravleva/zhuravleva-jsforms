@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="libs/normalize-css/normalize.css" />
 	<link rel="stylesheet" href="libs/bootstrap-4-grid/grid.min.css" />
 	<link rel="stylesheet" href="css/main.css" />
+	<link rel="stylesheet" href="css/custom.css" />
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&amp;subset=cyrillic-ext" rel="stylesheet">
 </head>
 
@@ -20,10 +21,12 @@
 				</div>
 			</div>
 			<div class="comment-add-block__right">
-				<h6 class="comment-add-block__right-title">Егор Казаков</h6>
-				<div class="notify notify--error">Комментарий не может быть пустым</div>
-				<textarea class="textarea textarea--comment-add" name="add_comment" placeholder="Присоединиться к обсуждению..."></textarea>
-				<a class="button" href="#">Опубликовать</a>
+				<form id="comment-add-form" action="success.html">
+					<h6 class="comment-add-block__right-title">Егор Казаков</h6>
+					<div id="commentErrorEmpty" class="notify notify--error error-hide">Комментарий не может быть пустым</div>
+					<textarea id="commentText" class="textarea textarea--comment-add" name="add_comment" placeholder="Присоединиться к обсуждению..."></textarea>
+					<input type="submit" value="Опубликовать" class="button">
+				</form>
 			</div>
 		</div>
 		<p>
@@ -32,7 +35,7 @@
 	</div>
 
 	<script src="libs/jquery/jquery.min.js"></script>
-	<script src="js/check-comment.js"></script>
+	<!-- <script src="js/check-comment.js"></script> -->
+	<script src="js/comment-form-check.js"></script>
 
 </body>
-</html>
