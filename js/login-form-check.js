@@ -8,10 +8,11 @@ $(document).ready(function(){
 		var noPassword = _loginForm.find('#no-password');
 		var incorrectEmail = _loginForm.find('#incorrect-email');
 		var incorrectPassword = _loginForm.find('#incorrect-password');
-		var emailIsValid = false;
-		var passwordIsValid = false;
+		// var emailIsValid = false;
+		// var passwordIsValid = false;
 		var button = _loginForm.find('.button--enter');
-		var incorrectLogin = _loginForm.find('#incorrect-login');
+		var emailValue;
+		var passwordValue;
 
 
 		var showNoEmail = function() {
@@ -52,13 +53,13 @@ $(document).ready(function(){
 				_loginFormValidate(event);
 			});
 		}
-		//Приватные методы
+		//Приватный метод
 		var _loginFormValidate = function(event){
 			event.preventDefault();
 
 			$.each(inputs, function(index, val){
 				var input = $(val),
-				value = input.val();
+				value = input.val().trim();
 				if (input.attr('type').toLowerCase() === 'email') {
 					if (value == '') {
 						showNoEmail();
@@ -66,7 +67,8 @@ $(document).ready(function(){
 						var pattern = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
 						if (pattern.test(value)) {
 							noShowEmail();
-							emailIsValid = true;
+							emailValue = value;
+							console.log(emailValue);
 						} else {
 							showIncorrectEmail();
 						}
@@ -78,26 +80,21 @@ $(document).ready(function(){
 						var pattern = /123/;
 						if (pattern.test(value)) {
 							noShowPassword();
-							passwordIsValid = true;
+							passwordValue = value;
+							console.log(passwordValue);
 						} else {
 							showIncorrectPassword();
 						}
 					}
 				}
 
-
 			});
 
-			// var _formValidation = function(event){
- 		// 		event.preventDefault();
- 				if (emailIsValid == true && passwordIsValid == true) {
- 					
-
-					_loginForm.submit()
-				} else {
-					incorrectLogin.removeClass('error-hide');
-				}
-			// }
+			if (emailValue === 'mail@mail.com' && passwordValue === '123') {
+				_loginForm.submit()
+			} else {
+				incorrectPassword.removeClass('error-hide');
+			}
 		}
 
 		return {
