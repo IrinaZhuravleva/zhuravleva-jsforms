@@ -297,8 +297,8 @@ a.badge:active {
 	border-color: #dde8ee;
 	border-style: solid;
 	border-radius: 22px;
-	padding-bottom: 0.9em;
-	padding-top: 0.7em;
+	padding-bottom: 0.85em;
+    padding-top: 0.75em;
 	padding-left: 1.25em;
 	padding-right: 1.25em;
 	color: #037EC6;
