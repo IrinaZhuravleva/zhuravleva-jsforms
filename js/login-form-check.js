@@ -8,11 +8,9 @@ $(document).ready(function(){
 		var noPassword = _loginForm.find('#no-password');
 		var incorrectEmail = _loginForm.find('#incorrect-email');
 		var incorrectPassword = _loginForm.find('#incorrect-password');
-		// var emailIsValid = false;
-		// var passwordIsValid = false;
 		var button = _loginForm.find('.button--enter');
-		var emailValue;
-		var passwordValue;
+		var emailValue = '';
+		var passwordValue = '';
 
 
 		var showNoEmail = function() {
@@ -47,16 +45,15 @@ $(document).ready(function(){
 			_setUpListeners();
 		}
 
-		// Метод прослушки событий
+		// // Метод прослушки событий
 		var _setUpListeners = function(){
-			button.on('click', function(event){
+			_loginForm.on('submit', function(event){
 				_loginFormValidate(event);
 			});
 		}
+
 		//Приватный метод
 		var _loginFormValidate = function(event){
-			event.preventDefault();
-
 			$.each(inputs, function(index, val){
 				var input = $(val),
 				value = input.val().trim();
@@ -87,14 +84,16 @@ $(document).ready(function(){
 						}
 					}
 				}
-
 			});
 
-			if (emailValue === 'mail@mail.com' && passwordValue === '123') {
-				_loginForm.submit()
-			} else {
+		if (emailValue === 'mail@mail.com' && passwordValue === '123') {
+			}  else if ((emailValue.length > 0 && passwordValue.length > 0) && (emailValue != 'mail@mail.com' || passwordValue != '123')) {
+				event.preventDefault();
 				incorrectPassword.removeClass('error-hide');
+			} else {
+				event.preventDefault();
 			}
+			
 		}
 
 		return {
