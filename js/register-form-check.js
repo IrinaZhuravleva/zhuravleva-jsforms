@@ -44,10 +44,10 @@ $(document).ready(function(){
 		var init = function(){
 			_setUpListeners();
 		}
-
+		// debugger
 		// Метод прослушки событий
 		var _setUpListeners = function(){
-			button.on('click', function(event){
+			_registerForm.on('submit', function(event){
 				_registerFormValidate(event);
 			});
 		}
@@ -66,7 +66,6 @@ $(document).ready(function(){
 						if (pattern.test(value)) {
 							noShowEmail();
 							emailValue = value;
-							console.log(emailValue);
 						} else {
 							showIncorrectEmail();
 						}
@@ -79,7 +78,6 @@ $(document).ready(function(){
 						if (pattern.test(value)) {
 							noShowPassword();
 							passwordValue = value;
-							console.log(passwordValue);
 						} else {
 							showOccupiedLogin();
 						}
@@ -88,11 +86,15 @@ $(document).ready(function(){
 
 			});
 
-			if (emailValue !== 'mail@mail.com') {
-				_registerForm.submit()
-			} else {
+			if (emailValue !== 'mail@mail.com' && passwordValue === '123') {
+				_registerForm.unbind('submit').submit();
+
+			}  else if ((emailValue.length > 0 && passwordValue.length > 0) && (emailValue = 'mail@mail.com')) {
+				event.preventDefault();
 				occupiedLogin.removeClass('error-hide');
-			}
+			} else {
+				event.preventDefault();
+			}	
 		}
 
 		return {
