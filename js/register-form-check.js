@@ -4,50 +4,53 @@ $(document).ready(function(){
 
 		var _registerForm = $('#register-form');
 		var inputs = _registerForm.find('input');
-		var noEmail = _registerForm.find('#no-email');
-		var noPassword = _registerForm.find('#no-password');
-		var incorrectEmail = _registerForm.find('#incorrect-email');
-		var occupiedLogin = _registerForm.find('#occupied-login');
-		var button = _registerForm.find('.button--enter');
-		var emailValue;
-		var passwordValue;
+		var patternEmail = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
+		var emailValue = '';
+		var passwordValue = '';
 
 
-		var showNoEmail = function() {
-			incorrectEmail.addClass('error-hide');
-			noEmail.removeClass('error-hide');
+		//универсальная функция, которая будет находить все ошибки и прятать их
+		var _hideErrors = function() {
+			$('.notify').hide();
 		}
-		var noShowEmail = function() {
-			noEmail.addClass('error-hide');
-			incorrectEmail.addClass('error-hide');
+
+
+		//универсальная функция для показа уведомлений/нотификаций
+		var _showError = function(title, desc) {
+			
+			if(desc) {
+				var $errorHtml = $('<div class="notify no-paddings">');
+				var $errorHtmlTitle = $('<div class="notify no-radius-bottom notify--error">');
+				$errorHtmlTitle.text(title);
+
+				var $errorHtmlDesc = $('<div class="notify no-radius-top">');
+				$errorHtmlDesc.html(desc);
+
+				$($errorHtmlTitle).appendTo($errorHtml);
+				$($errorHtmlDesc).appendTo($errorHtml);
+
+			} else {
+				//создаем элемент, который потом добавим на страницу
+				var $errorHtml = $('<div class="notify notify--error mb-20">');
+				$errorHtml.text(title);
+			}
+
+			$errorHtml.appendTo('#errorsWrapper');
+
 		}
-		var showIncorrectEmail = function() {
-			noEmail.addClass('error-hide');
-			incorrectEmail.removeClass('error-hide');
-		}
-		var showNoPassword = function() {
-			occupiedLogin.addClass('error-hide');
-			noPassword.removeClass('error-hide');
-		}
-		var noShowPassword = function() {
-			noPassword.addClass('error-hide');
-			occupiedLogin.addClass('error-hide');
-		}
-		var showOccupiedLogin = function() {
-			incorrectEmail.addClass('error-hide');
-			noPassword.addClass('error-hide');
-			occupiedLogin.removeClass('error-hide');
-		}
-	
+		
 		
 		// Метод инициализации
 		var init = function(){
 			_setUpListeners();
 		}
-		// debugger
+
+
 		// Метод прослушки событий
 		var _setUpListeners = function(){
 			_registerForm.on('submit', function(event){
+				_hideErrors();
+				// _showError('Test message');
 				_registerFormValidate(event);
 			});
 		}
@@ -58,48 +61,43 @@ $(document).ready(function(){
 			$.each(inputs, function(index, val){
 				var input = $(val),
 				value = input.val().trim();
+
+				//Проверка на корректность Email
 				if (input.attr('type').toLowerCase() === 'email') {
 					if (value == '') {
-						showNoEmail();
-					} else if (value !== '') {
-						var pattern = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
-						if (pattern.test(value)) {
-							noShowEmail();
+						_showError('Email не должен быть пустым');
+					} else {
+						if (patternEmail.test(value)) {
 							emailValue = value;
 						} else {
-							showIncorrectEmail();
+							_showError('Введите корректный Email');
 						}
 					}
+				//Проверка на корректность пароля
 				} else if (input.attr('type').toLowerCase() === 'password') {
 					if (value == '') {
-						showNoPassword();
-					} else if (value !== '') {
-						var pattern = /123/;
-						if (pattern.test(value)) {
-							noShowPassword();
-							passwordValue = value;
-						} else {
-							showOccupiedLogin();
-						}
+						_showError('Пароль не должен быть пустым');
+					} else {
+						passwordValue = value;
 					}
+
 				}
-
+				console.log(emailValue);
 			});
+			console.log(emailValue);
+			
 
-			if (emailValue !== 'mail@mail.com' && passwordValue === '123') {
+			if (emailValue !== 'mail@mail.com' && passwordValue !== '') {
 				_registerForm.unbind('submit').submit();
-
-			}  else if ((emailValue.length > 0 && passwordValue.length > 0) && (emailValue = 'mail@mail.com')) {
+			} else if ((emailValue.length > 0 && passwordValue.length > 0) && (emailValue = 'mail@mail.com')) {
 				event.preventDefault();
-				occupiedLogin.removeClass('error-hide');
+				_showError('Этот email уже занят', '<p>Используйте другой email чтобы создать новый аккаунт.</p><p> Или воспользуйтесь <a href="#!">восстановлением пароля </a>, чтобы войти на сайт.</p>');
 			} else {
 				event.preventDefault();
 			}	
 		}
 
-		return {
-			init
-		}
+		return { init, _showError }
 	}());
 
 	checkRegisterForm.init();
