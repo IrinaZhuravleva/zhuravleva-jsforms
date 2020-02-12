@@ -31,15 +31,22 @@
 				<div class="login-form__background">
 					<div class="login-form pt-30 pb-30">
 						<h1 class="text-center login-heading mt-0 pt-0">Регистрация</h1>
-							<div id="errorsWrapper">
-								
-
-							</div>
 						<form id="register-form" action="success.html">
+							<div class="notify notify--error mb-20 error-hide" id="no-email">Введите email</div>
+							<div class="notify notify--error mb-20 error-hide" id="incorrect-email">Неверный формат email</div>
+							<div class="notify notify--error mb-20 error-hide" id="no-password">Введите пароль</div>
+							<div class="notify no-paddings error-hide" id="occupied-login">
+								<div class="notify no-radius-bottom notify--error">Данный email уже занят</div>
+								<div class="notify no-radius-top">
+									<p>Используйте другой email чтобы создать новый аккаунт.</p>
+									<p> Или воспользуйтесь
+										<a href="#!">восстановлением пароля </a>, чтобы войти на сайт.</p>
+								</div>
+							</div>
 							<input class="input-form-registration" name="email" type="email" placeholder="Email" />
 							<input class="input-form-registration" name="password" type="password" placeholder="Пароль" />
 							<div class="text-center pt-30">
-								<input type="submit" value="Регистрация" class="button button--enter" formnovalidate>
+								<input type="submit" value="Регистрация" class="button button--enter">
 							</div>
 						</form>
 					</div>
